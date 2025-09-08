@@ -1,0 +1,11 @@
+{
+  "name": "Toast UI Markdown Editor",
+  "version": "1.0.1",
+  "description": "WYSIWYG Markdown editor for Saltcorn string fields using TOAST UI Editor. Saves Markdown reliably (incl. soft-break -> hard-break fix).",
+  "main": "index.js",
+  "license": "MIT",
+  "keywords": ["saltcorn", "plugin", "fieldview", "markdown", "wysiwyg", "toastui"],
+  "author": "",
+  "repository": "github:saltcorn/tui"
+}
+
