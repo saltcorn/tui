@@ -17,9 +17,9 @@ const headers = [
     }/toastui-editor-all.min.js`,
   },
   {
-    script: `/plugins/public/tui@${
+    css: `/plugins/public/tui@${
       require("./package.json").version
-    }/toastui-editor-all.min.js`,
+    }/toastui-editor.min.css`,
   },
 ];
 
