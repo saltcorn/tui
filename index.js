@@ -12,7 +12,7 @@ const {
 // CDN assets
 const headers = [
   {
-    css: `/plugins/public/tui@${
+    script: `/plugins/public/tui@${
       require("./package.json").version
     }/toastui-editor-all.min.js`,
   },
@@ -141,5 +141,5 @@ module.exports = {
   description:
     "WYSIWYG Markdown editor for Saltcorn String fields using TOAST UI Editor. Saves Markdown and preserves visual line breaks.",
   headers,
-  fieldviews: { "ToastUI Markdown Editor": ToastUIMarkdownEditor },
+  fieldviews: { "toastui_markdown_edit": ToastUIMarkdownEditor },
 };
