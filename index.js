@@ -145,20 +145,6 @@ const ToastUIMarkdownEditor = {
           const autogrow = ${JSON.stringify(autogrow)}
           const autofocus = ${JSON.stringify(autofocus)}
 
-          const baseToolbar = [
-            ['heading', 'bold', 'italic', 'strike'],
-            ['hr', 'quote'],
-            ['ul', 'ol', 'task', 'indent', 'outdent'],
-            ['table', 'link', 'image'],
-            ['code', 'codeblock']
-          ]
-
-          const toolbarItems = hideImageButton
-            ? baseToolbar
-                .map(group => group.filter(item => item !== 'image'))
-                .filter(group => group.length)
-            : baseToolbar
-
           const ed = new toastui.Editor({
             el: el,
             height: autogrow ? "auto" : "${height}",
@@ -167,10 +153,11 @@ const ToastUIMarkdownEditor = {
             initialEditType: 'wysiwyg',
             usageStatistics: false,
             hideModeSwitch: true,
-            toolbarItems: toolbarItems,
             placeholder: ${JSON.stringify(placeholder)},
             initialValue: ta.value || ''
           })
+
+          if (hideImageButton) ed.removeToolbarItem('image');
 
           const hardwrap = ${JSON.stringify(hardwrap)}
           const hardBreakFix = ${hardBreakFix.toString()}
