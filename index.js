@@ -22,6 +22,16 @@ const headers = [
       require("./package.json").version
     }/toastui-editor.min.css`,
   },
+  {
+    script: `/plugins/public/tui@${
+      require("./package.json").version
+    }/tui-editor-plugin-font-size.min.js`,
+  },
+  {
+    css: `/plugins/public/tui@${
+      require("./package.json").version
+    }/tui-editor-plugin-font-size.min.css`,
+  },
 ];
 
 // Fieldview
@@ -69,7 +79,8 @@ const ToastUIMarkdownEditor = {
     const taId = `in_${fieldName}_${Math.random().toString(36).slice(2)}`;
     const edId = `ed_${fieldName}_${Math.random().toString(36).slice(2)}`;
 
-    const height = attrs && attrs.height ? String(attrs.height) + "px" : "320px";
+    const height =
+      attrs && attrs.height ? String(attrs.height) + "px" : "320px";
     const placeholder =
       attrs && attrs.placeholder ? String(attrs.placeholder) : "";
     const hardwrap =
@@ -125,11 +136,9 @@ const ToastUIMarkdownEditor = {
       // hidden textarea carries the Markdown value
       textarea(
         { name: fieldName, id: taId, style: "display:none" },
-        text(v || "")
+        text(v || ""),
       ),
-      style(
-        `.placeholder { background-color: transparent !important;}`
-      ),
+      style(`.placeholder { background-color: transparent !important;}`),
       // visible editor
       div({ id: edId }),
       // init + sync
@@ -137,9 +146,22 @@ const ToastUIMarkdownEditor = {
         domReady(`
         (function()
         {
+          window.fontSize =
+            window.fontSize ||
+            (window.toastui &&
+              window.toastui.Editor &&
+              window.toastui.Editor.plugin &&
+              (window.toastui.Editor.plugin.fontSize ||
+                window.toastui.Editor.plugin.uml))
+
           const ta = document.getElementById('${taId}')
           const el = document.getElementById('${edId}')
           if(!ta || !el) return
+
+          // pick up the surrounding font size so the editor matches the theme
+          const baseFontSize = window.getComputedStyle(
+            el.parentElement || document.body,
+          ).fontSize
 
           const hideImageButton = ${JSON.stringify(hideImageButton)}
           const autogrow = ${JSON.stringify(autogrow)}
@@ -154,8 +176,14 @@ const ToastUIMarkdownEditor = {
             usageStatistics: false,
             hideModeSwitch: true,
             placeholder: ${JSON.stringify(placeholder)},
-            initialValue: ta.value || ''
+            initialValue: ta.value || '',
+            plugins: window.fontSize ? [window.fontSize] : [],
           })
+
+          // enforce base font size on this instance to follow theme defaults
+          const styleTag = document.createElement('style')
+          styleTag.innerHTML = \`#${edId} .toastui-editor-contents, #${edId} .toastui-editor-defaultUI, #${edId} .toastui-editor-ww-container, #${edId} .toastui-editor-md-preview { font-size: ${"${baseFontSize}"}; }\`
+          document.head.appendChild(styleTag)
 
           if (hideImageButton) ed.removeToolbarItem('image');
 
@@ -179,8 +207,8 @@ const ToastUIMarkdownEditor = {
             })
           }
         })();
-      `)
-      )
+      `),
+      ),
     );
   },
 };
@@ -191,5 +219,5 @@ module.exports = {
   description:
     "WYSIWYG Markdown editor for Saltcorn String fields using TOAST UI Editor. Saves Markdown and preserves visual line breaks.",
   headers,
-  fieldviews: { "toastui_markdown_edit": ToastUIMarkdownEditor },
+  fieldviews: { toastui_markdown_edit: ToastUIMarkdownEditor },
 };

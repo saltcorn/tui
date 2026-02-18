@@ -1,0 +1,27 @@
+/**
+ * Minified by jsDelivr using clean-css v5.3.3.
+ * Original file: /npm/tui-editor-plugin-font-size@1.0.4/dist/tui-editor-plugin-font-size.css
+ *
+ * Do NOT use SRI with dynamically generated files! More information: https://www.jsdelivr.com/using-sri-with-dynamic-files
+ */
+/*!
+ * TOAST UI Editor : Font Size Plugin
+ * @version 1.0.4 | Mon Sep 12 2022
+ * @author [object Object]
+ * @license MIT
+ */
+.drop-down-item {
+  user-select: none;
+  padding: 6px 18px;
+}
+.drop-down-item:hover {
+  background-color: #ebedef;
+}
+.size-input {
+  width: 100%;
+  border: 1px solid #ebedef;
+  outline: 0;
+  border-radius: 4px;
+  padding-left: 8px;
+}
+/*# sourceMappingURL=/sm/b1a6fde41e094076d994baf21d7c7c7644fb77ef8997b03305edfd3b211d0dc9.map */
